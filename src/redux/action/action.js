@@ -26,32 +26,32 @@ export const registerUser = params => {
   };
 };
 
-// export const loginUser = (params, navigation) => {
-//   console.log('Email:', params.email);
-//   console.log('Password:', params.password);
+export const loginUser = (params, navigation) => {
+  console.log('Email:', params.email);
+  console.log('Password:', params.password);
 
-//   return async dispatch => {
-//     try {
-//       const response = await loginUserAPI(params);
-//       // console.log('Response from API:', response);
-//       // console.log('API Email', response.result);
-//       // console.log('Local Email', params.email);
-//       // console.log('token only =', response.Token);
+  return async dispatch => {
+    try {
+      const response = await loginUserAPI(params);
+      // console.log('Response from API:', response);
+      // console.log('API Email', response.result);
+      // console.log('Local Email', params.email);
+      // console.log('token only =', response.Token);
 
-//       if (response.result.email === params.email) {
-//         dispatch({
-//           type: LOGIN_USER,
-//           payload: response,
-//         });
-//         navigation.navigate('Home');
-//       } else {
-//         Alert.alert('invalid Email or password');
-//       }
-//     } catch (error) {
-//       Alert.alert('invalid Email or password');
-//     }
-//   };
-// };
+      if (response.result.email === params.email) {
+        dispatch({
+          type: LOGIN_USER,
+          payload: response,
+        });
+        navigation.navigate('Home');
+      } else {
+        Alert.alert('invalid Email or password');
+      }
+    } catch (error) {
+      Alert.alert('invalid Email or password');
+    }
+  };
+};
 
 export const fetchStates = () => {
   return async dispatch => {
