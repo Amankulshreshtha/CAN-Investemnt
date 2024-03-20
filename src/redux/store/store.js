@@ -1,4 +1,4 @@
-import {persistStore} from 'redux-persist';
+import {persistReducer, persistStore} from 'redux-persist';
 import authReducer from '../reducer/authReducer';
 import {combineReducers} from 'redux';
 import {configureStore} from '@reduxjs/toolkit';
@@ -7,6 +7,12 @@ import formuSlice from '../slice/formuSlice';
 import portfolioSlice from '../slice/portfolioSlice';
 import {clientApi} from '../services/clientApi';
 import {setupListeners} from '@reduxjs/toolkit/query';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
+};
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -15,9 +21,11 @@ const rootReducer = combineReducers({
   portfolio: portfolioSlice,
   [clientApi.reducerPath]: clientApi.reducer,
 });
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 // hello
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,

@@ -1,7 +1,5 @@
 import {clientApi} from './clientApi';
 
-// const BASE_URL = 'http://54.190.192.105:9185/angel';
-
 export const authService = clientApi.injectEndpoints({
   endpoints: builder => ({
     loginUser: builder.mutation({
@@ -11,7 +9,33 @@ export const authService = clientApi.injectEndpoints({
         body: body,
       }),
     }),
+    // State Data
+    fetchData: builder.query({
+      query: () => '/get_all_state',
+    }),
+
+    // Register User
+    registerUser: builder.mutation({
+      query: body => ({
+        url: `/register`,
+        method: 'POST',
+        body: body,
+      }),
+    }),
+
+    mendateList: builder.mutation({
+      query: body => ({
+        url: `/mandate/list`,
+        method: 'POST',
+        body: body,
+      }),
+    }),
   }),
 });
 
-export const {useLoginUserMutation} = authService;
+export const {
+  useLoginUserMutation,
+  useFetchDataQuery,
+  useRegisterUserMutation,
+  useMendateListMutation,
+} = authService;

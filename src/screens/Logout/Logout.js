@@ -1,11 +1,14 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import CustomAlert from '../../components/CustomAlert/CustomAlert';
+import {logoutUser} from '../../redux/action/action';
 
 const Logout = ({navigation}) => {
   const [doubleButton, setDoubleButton] = useState(true);
-
+  const dispatch = useDispatch();
   const handleLogout = () => {
+    dispatch(logoutUser());
     navigation.navigate('Login');
   };
 

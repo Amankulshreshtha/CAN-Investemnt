@@ -1,7 +1,7 @@
 import axios from 'axios';
+import {useSelector} from 'react-redux';
 
 const BASE_URL = 'http://54.190.192.105:9185/angel';
-let Authorization_Key = '';
 
 export const registerUserAPI = async params => {
   try {
@@ -12,16 +12,16 @@ export const registerUserAPI = async params => {
   }
 };
 
-export const loginUserAPI = async params => {
-  try {
-    const response = await axios.post(`${BASE_URL}/login`, params);
-    // console.log('hellooo aman your token is here', response.data.Token);
-    Authorization_Key = response.data.Token;
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
+// export const loginUserAPI = async params => {
+//   try {
+//     const response = await axios.post(`${BASE_URL}/login`, params);
+//     // console.log('hellooo aman your token is here', response.data.Token);
+//     Authorization_Key = response.data.Token;
+//     return response.data;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 export const fetchStatesAPI = async () => {
   try {
@@ -33,14 +33,15 @@ export const fetchStatesAPI = async () => {
 };
 
 export const CalendarData = async () => {
+  const Authantication_key = useSelector(state => state.auth.token);
+  console.log(token);
   try {
     const response = await axios.get(`${BASE_URL}/get_Events`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: Authorization_Key,
+        Authorization: Authantication_key,
       },
     });
-    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;

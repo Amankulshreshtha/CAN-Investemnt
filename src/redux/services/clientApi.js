@@ -7,9 +7,14 @@ export const clientApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: async (headers, {getState, endpoints}) => {
-      // const userToken = getState().auth.Token;
-      // console.log('userToken=====>>', userToken);
-      headers.set('Content-Type', 'application/json');
+      const token = getState().auth.user.Token;
+      console.log('tokennnnn=====>>', token);
+      if (token) {
+        headers.set('Authorization', token);
+        headers.set('Content-Type', 'application/json');
+      } else {
+        headers.set('Content-Type', 'application/json');
+      }
       return headers;
     },
   }),

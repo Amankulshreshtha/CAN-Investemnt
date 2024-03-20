@@ -1,18 +1,30 @@
 import React, {useState} from 'react';
-import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import {loginUser} from '../../redux/action/action';
+import {
+  authService,
+  useLoginUserMutation,
+} from '../../redux/services/authServices';
 import CustomButton from '@components/customeButton';
 import IMAGES from '@assets/Image';
 import styles from './styles';
+import {loginUser} from '../../redux/action/action';
 
 const Login = ({navigation}) => {
   const dispatch = useDispatch();
   const [passVisible, setPassVisible] = useState(false);
+  const [loginUserMutation] = useLoginUserMutation();
   const user = useSelector(state => state.auth.user);
-  // console.log(user);
+  console.log(user, '=====');
   const email = user ? user.email : '';
   const password = user ? user.password : '';
 
@@ -33,8 +45,21 @@ const Login = ({navigation}) => {
     <Formik
       initialValues={{email: email, password: password}}
       validationSchema={validationSchema}
-      onSubmit={values => {
-        dispatch(loginUser(values, navigation));
+      onSubmit={async values => {
+        console.log('values', values);
+        try {
+          const data = await loginUserMutation(values);
+          console.log(data, '<===== data');
+          const userData = data.data;
+          console.log(userData, '=====hello aman');
+          dispatch(loginUser(userData));
+          navigation.navigate('Home');
+        } catch (error) {
+          Alert.alert(
+            'Login Failed',
+            'The email or password you entered is incorrect. Please try again.',
+          );
+        }
       }}>
       {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
         <View style={styles.mainContainer}>
@@ -62,7 +87,7 @@ const Login = ({navigation}) => {
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
-                  secureTextEntry={passVisible}
+                  secureTextEntry={!passVisible}
                 />
                 <TouchableOpacity onPress={() => setPassVisible(!passVisible)}>
                   <Image source={IMAGES.eye} style={styles.eyeIcon} />

@@ -55,7 +55,7 @@ export default styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderRadius: moderateScale(10),
   },
-  errorText:{
+  errorText: {
     color: 'red',
-  }
+  },
 });

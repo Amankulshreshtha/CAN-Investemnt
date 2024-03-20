@@ -17,10 +17,14 @@ import IMAGES from '@assets/Image';
 import styles from './styles';
 import {Formik} from 'formik';
 import {validationSchema} from '../../components/yup/validationSchemas';
+import {useFetchDataQuery} from '../../redux/services/authServices';
+import {useRegisterUserMutation} from '../../redux/services/authServices';
 
 export default function Register({navigation}) {
   const [showAlert, setShowAlert] = useState(false);
   const [showPass, setShowPass] = useState(false);
+  const {data, isError} = useFetchDataQuery();
+  const [RegisterUserMutation] = useRegisterUserMutation();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,19 +37,19 @@ export default function Register({navigation}) {
 
   const handleRegister = async values => {
     try {
-      const response = await dispatch(registerUser(values));
+      const data = await RegisterUserMutation(values);
+      console.log(data, '<===== data');
       setShowAlert(true);
-    } catch (error) {
-      console.error('Error registering user:', error);
-    }
+    } catch (error) {}
   };
 
   const handleContinue = () => {
     setShowAlert(false);
     navigation.navigate('Login');
   };
-
-  const allStates = useSelector(state => state.auth.allStates);
+  const fetchDataQuery = useFetchDataQuery();
+  const allStates = fetchDataQuery?.data.result || [];
+  dispatch(fetchStates(allStates));
 
   return (
     <Formik

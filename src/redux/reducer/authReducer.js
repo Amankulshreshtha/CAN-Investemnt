@@ -1,7 +1,7 @@
-import {ALL_STATES, LOGIN_USER} from '../action/types';
+import {ALL_STATES, LOGIN_USER, LOGOUT} from '../action/types';
 
 const initialState = {
-  user: [],
+  user: {},
   allStates: [],
 };
 
@@ -16,6 +16,11 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         allStates: action.payload,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        user: null,
       };
     default:
       return state;
