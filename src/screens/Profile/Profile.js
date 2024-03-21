@@ -10,17 +10,43 @@ import {
 } from 'react-native';
 import styles from './styles';
 import Header from '@components/Headers/Header';
-
+import {useProfileDataMutation} from '../../redux/services/authServices';
+import {Dropdown} from 'react-native-element-dropdown';
 import CustomButton from '@components/customeButton';
 import {Calendar} from 'react-native-calendars';
 import IMAGES from '@assets/Image';
+import {useSelector} from 'react-redux';
 
 const Profile = () => {
   const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [ProfileDataMutation] = useProfileDataMutation();
+  const userInfo = useSelector(state => state.auth.user.result);
+  const allstate = useSelector(state => state.auth.allStates);
+  const [name, setName] = useState(userInfo.name);
+  const [email, setEmail] = useState(userInfo.email);
+  const [state, setState] = useState(userInfo.state);
+  const [city, setCity] = useState(userInfo.city);
+  const [organization, setOrganization] = useState(userInfo.organization);
+  const [phone, setPhone] = useState(userInfo.phone);
 
-  const handleUpdate = () => {
-    console.log('first');
+  const params = {
+    id: userInfo._id,
+    name,
+    email,
+    organization,
+    state,
+    city,
+  };
+
+  const handleUpdate = async () => {
+    try {
+      const updateData = await ProfileDataMutation(params);
+      console.log('====>>>>>.', params);
+      console.log(updateData, '<=========');
+    } catch (error) {
+      Alert.alert(error.message);
+    }
   };
 
   const handleCalendarPress = () => {
@@ -31,7 +57,7 @@ const Profile = () => {
     const formattedDate = `${day.day}-${day.month}-${day.year}`;
     setSelectedDate(formattedDate);
     setCalendarVisible(false);
-    console.log('Selected date:', day);
+    // console.log('Selected date:', day);
   };
 
   return (
@@ -44,9 +70,19 @@ const Profile = () => {
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.txtInputHeading}>Name</Text>
-          <TextInput placeholder="Enter Name" style={styles.txtInput} />
+          <TextInput
+            placeholder="Enter Name"
+            style={styles.txtInput}
+            value={name}
+            onChangeText={text => setName(text)}
+          />
           <Text style={styles.txtInputHeading}>Email</Text>
-          <TextInput placeholder="Enter Email" style={styles.txtInput} />
+          <TextInput
+            placeholder="Enter Email"
+            style={styles.txtInput}
+            value={email}
+            onChangeText={text => setEmail(text)}
+          />
           <Text style={styles.txtInputHeading}>Date of birth</Text>
           <View style={styles.dobView}>
             <TextInput
@@ -60,13 +96,37 @@ const Profile = () => {
           </View>
           {isCalendarVisible && <Calendar onDayPress={onDayPress} />}
           <Text style={styles.txtInputHeading}>Phone</Text>
-          <TextInput placeholder="Enter Phone" style={styles.txtInput} />
+          <TextInput
+            placeholder="Enter Phone"
+            style={styles.txtInput}
+            value={phone}
+            onChangeText={text => setPhone(text)}
+          />
           <Text style={styles.txtInputHeading}>Organization</Text>
-          <TextInput placeholder="Enter Organization" style={styles.txtInput} />
+          <TextInput
+            placeholder="Enter Organization"
+            style={styles.txtInput}
+            value={organization}
+            onChangeText={text => setOrganization(text)}
+          />
           <Text style={styles.txtInputHeading}>State</Text>
-          <TextInput placeholder="Enter State" style={styles.txtInput} />
+          <Dropdown
+            data={allstate}
+            placeholder={state}
+            labelField="state"
+            valueField="_id"
+            onChange={item => setState(item.state)}
+            style={styles.dropDown}
+            value={state}
+          />
+
           <Text style={styles.txtInputHeading}>City</Text>
-          <TextInput placeholder="Enter City" style={styles.txtInput} />
+          <TextInput
+            placeholder="Enter City"
+            style={styles.txtInput}
+            value={city}
+            onChangeText={text => setCity(text)}
+          />
         </View>
         <CustomButton title="Update" onPress={handleUpdate} />
       </View>

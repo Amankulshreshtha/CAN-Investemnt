@@ -13,20 +13,20 @@ import CustomDrawerHeader from '@components/Headers/Header';
 import {Calendar} from 'react-native-calendars';
 import styles from './styles';
 import IMAGES from '@assets/Image';
-import {CalendarData} from '../../redux/api/api';
-import {horizontalScale} from '../../Utills/Metrics';
+import {useCalendarDataQuery} from '../../redux/services/authServices';
 
 const CalendarScreen = () => {
   const [selectDate, setSelectDate] = useState(null);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const {data, isError} = useCalendarDataQuery();
   useEffect(() => {
     async function fetchData() {
       try {
-        const eventData = await CalendarData();
-        setEvents(eventData.result);
-        setLoading(false);
+        const eventData = await data.result;
+        console.log(data, '=====hellloooo');
+        setEvents(eventData);
       } catch (error) {
         console.error('Error fetching calendar data:', error);
         setLoading(false);
@@ -66,13 +66,13 @@ const CalendarScreen = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <View style={styles.loadingContainer}>
+  //       <Text>Loading...</Text>
+  //     </View>
+  //   );
+  // }
   const handleOpenDocument = async fileUrl => {
     try {
       if (fileUrl) {

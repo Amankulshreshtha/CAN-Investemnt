@@ -25,6 +25,8 @@ export default function Register({navigation}) {
   const [showPass, setShowPass] = useState(false);
   const {data, isError} = useFetchDataQuery();
   const [RegisterUserMutation] = useRegisterUserMutation();
+  const states = useSelector(state => state.auth.allStates);
+  console.log('=====> states', states);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -64,8 +66,8 @@ export default function Register({navigation}) {
       validationSchema={validationSchema}
       onSubmit={handleRegister}>
       {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
-        <ScrollView style={styles.maincontainer}>
-          <View style={styles.mainSubContainer}>
+        <View style={styles.maincontainer}>
+          <ScrollView style={styles.mainSubContainer}>
             <Text style={styles.MainText}>Become an Investor</Text>
             <View style={styles.SubContainer}>
               <Text style={styles.InputText}>Name</Text>
@@ -101,7 +103,9 @@ export default function Register({navigation}) {
                   onBlur={handleBlur('password')}
                   value={values.password}
                 />
-                <TouchableOpacity onPress={() => setShowPass(!showPass)}>
+                <TouchableOpacity
+                  style={{marginRight: 5}}
+                  onPress={() => setShowPass(!showPass)}>
                   <Image source={IMAGES.eye} />
                 </TouchableOpacity>
               </View>
@@ -124,7 +128,7 @@ export default function Register({navigation}) {
               <Text style={styles.InputText}>State</Text>
               <View style={{borderWidth: 0.5, borderRadius: 10}}>
                 <Dropdown
-                  data={allStates}
+                  data={states}
                   labelField="state"
                   valueField="_id"
                   onChange={item => handleChange('state')(item.state)}
@@ -159,7 +163,7 @@ export default function Register({navigation}) {
             <TouchableOpacity onPress={handleHaveAccount}>
               <Text style={styles.alreadyText}>Already have an account?</Text>
             </TouchableOpacity>
-          </View>
+          </ScrollView>
           {showAlert && (
             <CustomAlert
               message="Thanks for sharing your interest to become an investor with CAN. We’ll reach out to you within next 24-72 hours to assess whether you meet our criteria to become an investor."
@@ -168,7 +172,7 @@ export default function Register({navigation}) {
               onClose={() => setShowAlert(false)}
             />
           )}
-        </ScrollView>
+        </View>
       )}
     </Formik>
   );

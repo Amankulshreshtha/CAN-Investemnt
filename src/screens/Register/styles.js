@@ -16,7 +16,7 @@ export default styles = StyleSheet.create({
     marginTop: 0,
     borderRadius: moderateScale(30),
     position: 'relative',
-    // height: '100%'
+    // height: '100%',
     marginBottom: -moderateScale(60),
   },
   MainText: {
@@ -26,10 +26,12 @@ export default styles = StyleSheet.create({
     color: '#000000',
   },
   SubContainer: {
+    flex: 1,
     padding: moderateScale(10),
   },
   InputText: {
-    fontSize: moderateScale(20),
+    // flex: 1,
+    fontSize: moderateScale(22),
     marginTop: moderateScale(5),
   },
   InputBox: {
@@ -45,7 +47,9 @@ export default styles = StyleSheet.create({
   },
   mainSubContainer: {
     // backgroundColor: 'red',
-    marginTop: -moderateScale(10),
+
+    // backgroundColor: 'red',
+    marginTop: -moderateScale(5),
   },
   eyeView: {
     flexDirection: 'row',

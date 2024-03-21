@@ -3,22 +3,23 @@ import {FlatList, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import Header from '@components/Headers/Header';
 import {FormuData} from '../../redux/api/api';
 import styles from './styles';
+import {useFormuDataQuery} from '../../redux/services/authServices';
 
 const Forum = ({navigation}) => {
   const [forumData, setForumData] = useState([]);
+  const {data, error} = useFormuDataQuery();
 
   useEffect(() => {
     async function fetchForumData() {
       try {
-        const data = await FormuData();
-        console.log('hellooo', data);
-        setForumData(data.result);
+        const FormuData = await data.result;
+        console.log('hellooo', FormuData);
+        setForumData(FormuData);
       } catch (error) {
         console.error('Error fetching forum data:', error);
       }
     }
     fetchForumData();
-    return () => {};
   }, []);
 
   const handleQus = () => {

@@ -40,27 +40,36 @@ const Login = ({navigation}) => {
   const handleForgotPassword = () => {
     navigation.navigate('ForgotPassword');
   };
+  const handleSubmit = async values => {
+    console.log('values', values);
+    try {
+      const data = await loginUserMutation(values);
+      console.log(data, 'uqdgjkqg');
+      if (data.data.status === true) {
+        const userData = data.data;
+        dispatch(loginUser(userData));
+        navigation.navigate('Home');
+      } else {
+        Alert.alert(
+          data.data.message,
+          'Login Failed',
+          'The email or password you entered is incorrect. Please try again.',
+        );
+        return {success: false, error: data.message};
+      }
+    } catch (error) {
+      Alert.alert(
+        'Login Failed',
+        'The email or password you entered is incorrect. Please try again.',
+      );
+    }
+  };
 
   return (
     <Formik
       initialValues={{email: email, password: password}}
       validationSchema={validationSchema}
-      onSubmit={async values => {
-        console.log('values', values);
-        try {
-          const data = await loginUserMutation(values);
-          console.log(data, '<===== data');
-          const userData = data.data;
-          console.log(userData, '=====hello aman');
-          dispatch(loginUser(userData));
-          navigation.navigate('Home');
-        } catch (error) {
-          Alert.alert(
-            'Login Failed',
-            'The email or password you entered is incorrect. Please try again.',
-          );
-        }
-      }}>
+      onSubmit={handleSubmit}>
       {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
         <View style={styles.mainContainer}>
           <View style={styles.loginContainer}>

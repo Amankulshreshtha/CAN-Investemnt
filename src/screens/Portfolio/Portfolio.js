@@ -12,7 +12,7 @@ export default function Portfolio() {
     const fetchPortfolioData = async () => {
       try {
         const response = await PortfolioData();
-        // console.log('Portfolio data:', response.data.result);
+
         setPortfolioData(response.result);
       } catch (error) {
         console.error('Error fetching portfolio data:', error);
