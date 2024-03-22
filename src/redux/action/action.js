@@ -1,5 +1,5 @@
 import {Alert} from 'react-native';
-import {LOGIN_USER, ALL_STATES, LOGOUT} from './types';
+import {LOGIN_USER, ALL_STATES, LOGOUT, FORMU_DATA} from './types';
 import {registerUserAPI, loginUserAPI, fetchStatesAPI} from '../api/api';
 
 // export const registerUser = params => {
@@ -64,5 +64,9 @@ export const logoutUser = () => ({
 
 export const loginUser = data => ({
   type: LOGIN_USER,
+  payload: data,
+});
+export const formuData = data => ({
+  type: FORMU_DATA,
   payload: data,
 });

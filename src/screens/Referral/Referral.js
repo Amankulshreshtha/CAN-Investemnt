@@ -6,14 +6,19 @@ import CustomButton from '@components/customeButton';
 import {useSelector} from 'react-redux';
 import {useRefrealDataMutation} from '../../redux/services/authServices';
 import {useLazyFetchReferalDataQuery} from '../../redux/services/authServices';
+
 const Referral = () => {
   const [referrals, setReferrals] = useState([]);
   const id = useSelector(state => state.auth.user.result._id);
   const [data] = useLazyFetchReferalDataQuery();
-  const [ReferalData] = useRefrealDataMutation();
+  const [referalData] = useRefrealDataMutation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+
+  useEffect(() => {
+    fetchReferrals();
+  }, []);
 
   const fetchReferrals = async () => {
     try {
@@ -25,30 +30,30 @@ const Referral = () => {
       console.log('Error fetching referrals:', err);
     }
   };
-  useEffect(() => {
-    fetchReferrals();
-  }, []);
-
-  const params = {
-    user_mandate: id,
-    name,
-    email,
-    phone,
-  };
 
   const handleSubmit = async () => {
-    console.log('Data===>>', id);
     try {
-      const responce = await ReferalData(params).unwrap();
-      console.log(responce, 'hcjkwkjqbkqsdjqw');
-    } catch {
+      const params = {
+        user_mandate: id,
+        name,
+        email,
+        phone,
+      };
+
+      const response = await referalData(params).unwrap();
+      if (response.status === true) {
+        console.log(response, 'hcjkwkjqbkqsdjqw');
+        fetchReferrals();
+        setName('');
+        setEmail('');
+        setPhone('');
+      } else {
+        console.log('Error:', response.message);
+      }
+    } catch (error) {
+      console.log('Error:', error.message);
       alert('Something went wrong! Please try again');
     }
-
-    // setReferrals([...referrals, newReferral]);
-    // setName('');
-    // setEmail('');
-    // setPhone('');
   };
 
   return (

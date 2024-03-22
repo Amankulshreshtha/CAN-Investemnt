@@ -24,7 +24,7 @@ const CalendarScreen = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const eventData = await data.result;
+        const eventData = await data?.result;
         console.log(data, '=====hellloooo');
         setEvents(eventData);
       } catch (error) {

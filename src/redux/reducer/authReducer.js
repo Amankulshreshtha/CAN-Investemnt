@@ -1,8 +1,9 @@
-import {ALL_STATES, LOGIN_USER, LOGOUT} from '../action/types';
+import {ALL_STATES, FORMU_DATA, LOGIN_USER, LOGOUT} from '../action/types';
 
 const initialState = {
   user: {},
   allStates: [],
+  formuData: {},
 };
 
 const authReducer = (state = initialState, action) => {
@@ -21,6 +22,11 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: null,
+      };
+    case FORMU_DATA:
+      return {
+        ...state,
+        formuData: action.payload,
       };
     default:
       return state;

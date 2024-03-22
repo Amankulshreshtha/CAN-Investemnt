@@ -67,6 +67,19 @@ export const authService = clientApi.injectEndpoints({
         body: body,
       }),
     }),
+    PortfolioData: builder.query({
+      query: id => '/get_all_portfolio',
+      method: 'GET',
+    }),
+    Active_Mandate: builder.query({
+      query: id => '/mandate/list',
+      method: 'GET',
+    }),
+
+    valuation: builder.query({
+      query: id => `/quetion_data_by_category?category_id=${id}`,
+      method: 'GET',
+    }),
   }),
 });
 
@@ -81,4 +94,7 @@ export const {
   useLazyFetchReferalDataQuery,
   useProfileDataMutation,
   useUpdate_passwordMutation,
+  usePortfolioDataQuery,
+  useActive_MandateQuery,
+  useLazyValuationQuery,
 } = authService;

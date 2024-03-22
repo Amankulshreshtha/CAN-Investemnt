@@ -21,7 +21,7 @@ export default styles = StyleSheet.create({
   },
 
   dataContainer: {
-    padding: moderateScale(20),
+    padding: moderateScale(10),
     elevation: 5,
     shadowRadius: 2,
     borderRadius: 10,
