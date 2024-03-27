@@ -1,28 +1,28 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
 import styles from './styles';
 import Header from '@components/Headers/Header';
+import {useActive_MandateMutation} from '../../redux/services/authServices';
 import IMAGES from '@assets/Image';
 
 export default function Home() {
-  const data = [
-    {
-      name: 'Jerry Imfotech',
-      Text: 'On demand food delivery startup',
-      MRP: 'INR 1.50 Lakhs',
-      Round_Size: 'INR 50 Lakhs',
-      Valuation: 'INR 3.6 cr',
-      Commitment: 'INR 20 Lakhs',
-    },
-    {
-      name: 'Chaiwala',
-      Text: 'Authentic Indian Tea',
-      MRP: 'INR 1.50 Lakhs',
-      Round_Size: 'INR 50 Lakhs',
-      Valuation: 'INR 3.6 cr',
-      Commitment: 'INR 20 Lakhs',
-    },
-  ];
+  const [data, setData] = useState([]);
+
+  const [getData] = useActive_MandateMutation();
+
+  useEffect(() => {
+    const allData = async () => {
+      try {
+        const response = await getData();
+        const res = response.data.result;
+        console.log(response.data.result, '...====>><<');
+        setData(res);
+      } catch (error) {
+        console.error('Error fetching active mandate:', error);
+      }
+    };
+    allData();
+  }, []);
 
   const agendaData = [
     {
@@ -79,25 +79,32 @@ export default function Home() {
       <View key={index} style={styles.item}>
         <View style={{flexDirection: 'row'}}>
           <Image source={IMAGES.jerry} />
-          <View style={{flexDirection: 'column'}}>
-            <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.details}>{item.Text}</Text>
+          <View style={styles.namediscriptionContainer}>
+            <Text style={styles.name}>{item.company_name}</Text>
+            <Text style={styles.details}>{item.description}</Text>
           </View>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.details}>
-            <Text style={styles.boldText}>MRP:</Text> {item.MRP}
+            <Text style={styles.boldText}>MRP:</Text> {item.mrr.mrr_amount}{' '}
+            {item.mrr.mrr_amount_in}
           </Text>
           <Text style={styles.details}>
-            <Text style={styles.boldText}>Round:</Text> {item.Round_Size}
+            <Text style={styles.boldText}>Round:</Text>
+            {item.round_size.round_size_amount}{' '}
+            {item.round_size.round_size_amount_in}
           </Text>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.details}>
-            <Text style={styles.boldText}>Valuation:</Text> {item.Valuation}
+            <Text style={styles.boldText}>Valuation:</Text>{' '}
+            {item.valuation.valuation_amount}{' '}
+            {item.valuation.valuation_amount_in}
           </Text>
           <Text style={styles.details}>
-            <Text style={styles.boldText}>Commitment:</Text> {item.Commitment}
+            <Text style={styles.boldText}>Commitment:</Text>{' '}
+            {item.commitment.commitment_amount}
+            {item.commitment.commitment_amount_in}
           </Text>
         </View>
       </View>

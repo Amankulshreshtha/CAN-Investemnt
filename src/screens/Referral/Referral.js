@@ -23,7 +23,7 @@ const Referral = () => {
   const fetchReferrals = async () => {
     try {
       const response = await data(id);
-      const referral = response.data.result;
+      const referral = response.data?.result;
       console.log(referral, '==========responce');
       setReferrals(referral);
     } catch (err) {

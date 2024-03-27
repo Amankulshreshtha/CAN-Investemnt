@@ -1,82 +1,26 @@
-import axios from 'axios';
-import {useSelector} from 'react-redux';
+// import axios from 'axios';
+// import {useSelector} from 'react-redux';
 
-const BASE_URL = 'http://54.190.192.105:9185/angel';
+// const BASE_URL = 'http://54.190.192.105:9185/angel';
 
-// export const registerUserAPI = async params => {
-//   try {
-//     const response = await axios.post(`${BASE_URL}/register`, params);
-//     return response.data;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
-// export const loginUserAPI = async params => {
-//   try {
-//     const response = await axios.post(`${BASE_URL}/login`, params);
-//     // console.log('hellooo aman your token is here', response.data.Token);
-//     Authorization_Key = response.data.Token;
-//     return response.data;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
-// export const fetchStatesAPI = async () => {
-//   try {
-//     const response = await axios.get(`${BASE_URL}/get_all_state`);
-//     return response.data;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
-// export const CalendarData = async () => {
-//   const Authantication_key = useSelector(state => state.auth.token);
-//   console.log(token);
-//   try {
-//     const response = await axios.get(`${BASE_URL}/get_Events`, {
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     });
-//     return response.data;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
-// export const FormuData = async () => {
-//   try {
-//     const response = await axios.get(`${BASE_URL}/get_all_forum_Category`, {
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: Authorization_Key,
-//       },
-//     });
-//     console.log(response);
-//     return response.data;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
-// export const PortfolioData = async () => {
-//   console.log(Authorization_Key);
-//   try {
-//     const response = await axios.get(
-//       'http://54.190.192.105:9185/angel/get_all_portfolio',
-//       {
+// export const fetchMandateList = async token => {
+//     try {
+//       const response = await fetch(`${BASE_URL}${API_ENDPOINTS.HOME}`, {
+//         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/json',
-//           Authorization: Authorization_Key,
+//           Authorization: token,
 //         },
-//       },
-//     );
-//     console.log(response, 'response helloooo');
-//     return response;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
+//       });
+//       const data = await response.json();
+//       console.log('Mandate List API Response:', data);
+//       if (response.ok) {
+//         return data;
+//       } else {
+//         throw new Error(data.message);
+//       }
+//     } catch (error) {
+//       console.error('Error fetching mandate list:', error);
+//       throw new Error('Failed to fetch mandate list: ' + error.message);
+//     }
+//   };

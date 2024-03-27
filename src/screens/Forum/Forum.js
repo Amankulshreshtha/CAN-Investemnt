@@ -13,7 +13,8 @@ const Forum = ({navigation}) => {
   useEffect(() => {
     async function fetchForumData() {
       try {
-        const FormuData = await data?.result;
+        const responce = await data;
+        const FormuData = data?.result;
         console.log('FormuData', FormuData);
 
         const ids = forumData.map(item => item._id);

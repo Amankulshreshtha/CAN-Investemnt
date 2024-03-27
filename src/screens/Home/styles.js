@@ -4,6 +4,8 @@ import {horizontalScale, moderateScale, verticalScale} from '@Utills/Metrics';
 export default styles = StyleSheet.create({
   container: {
     flex: 1,
+    // top: ''
+    // backgroundColor: 'red',
   },
   text: {
     fontFamily: 'Nunito-SemiBold',
@@ -19,9 +21,14 @@ export default styles = StyleSheet.create({
     marginHorizontal: moderateScale(10),
     elevation: 5,
   },
+  namediscriptionContainer: {
+    flex: 1,
+    marginLeft: horizontalScale(5),
+    marginBottom: verticalScale(5),
+  },
   name: {
     fontSize: moderateScale(20),
-    marginLeft: moderateScale(10),
+    marginLeft: moderateScale(1),
     fontFamily: 'Nunito-SemiBold',
     color: '#000000',
   },

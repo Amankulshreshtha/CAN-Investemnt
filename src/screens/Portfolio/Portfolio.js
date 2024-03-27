@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import Header from '@components/Headers/Header';
 import styles from './styles';
 import IMAGES from '@assets/Image';
-// import {PortfolioData} from '../../redux/api/api';
 import {usePortfolioDataQuery} from '../../redux/services/authServices';
 
 export default function Portfolio() {
@@ -13,10 +12,12 @@ export default function Portfolio() {
   useEffect(() => {
     const fetchPortfolioData = async () => {
       try {
-        const response = await data.result;
-        console.log(response, 'response====');
+        const response = await data;
+        const portfolios = data?.result;
 
-        setPortfolioData(response);
+        console.log(portfolios, 'response====');
+
+        setPortfolioData(portfolios);
       } catch (error) {
         console.error('Error fetching portfolio data:', error);
       }

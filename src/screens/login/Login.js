@@ -23,7 +23,7 @@ const Login = ({navigation}) => {
   const dispatch = useDispatch();
   const [passVisible, setPassVisible] = useState(false);
   const [loginUserMutation] = useLoginUserMutation();
-  const user = useSelector(state => state.auth.user);
+  const user = useSelector(state => state.auth?.user);
   console.log(user, '=====');
   const email = user ? user.email : '';
   const password = user ? user.password : '';
@@ -43,10 +43,11 @@ const Login = ({navigation}) => {
   const handleSubmit = async values => {
     console.log('values', values);
     try {
-      const data = await loginUserMutation(values);
+      const data = await loginUserMutation(values).unwrap();
       console.log(data, 'uqdgjkqg');
-      if (data.data.status === true) {
-        const userData = data.data;
+      if (data.status === true) {
+        const userData = data;
+        console.log(userData);
         dispatch(loginUser(userData));
         navigation.navigate('Home');
       } else {
@@ -72,6 +73,7 @@ const Login = ({navigation}) => {
       onSubmit={handleSubmit}>
       {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
         <View style={styles.mainContainer}>
+          <CustomHeader height={350} />
           <View style={styles.loginContainer}>
             <Text style={styles.loginHeading}>Login</Text>
             <View style={styles.inputContainer}>

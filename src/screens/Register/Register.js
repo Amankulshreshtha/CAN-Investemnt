@@ -19,6 +19,9 @@ import {Formik} from 'formik';
 import {validationSchema} from '../../components/yup/validationSchemas';
 import {useFetchDataQuery} from '../../redux/services/authServices';
 import {useRegisterUserMutation} from '../../redux/services/authServices';
+import Header from '../../components/Headers/Header';
+import CalendarHeader from 'react-native-calendars/src/calendar/header';
+import CustomHeader from '../../components/Headers/CustomHeader';
 
 export default function Register({navigation}) {
   const [showAlert, setShowAlert] = useState(false);
@@ -26,7 +29,7 @@ export default function Register({navigation}) {
   const {data, isError} = useFetchDataQuery();
   const [RegisterUserMutation] = useRegisterUserMutation();
   const states = useSelector(state => state.auth.allStates);
-  console.log('=====> states', states);
+  // console.log('=====> states', states);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,6 +38,15 @@ export default function Register({navigation}) {
 
   const handleHaveAccount = () => {
     navigation.navigate('Login');
+  };
+  const registerData = async values => {
+    const formData = new FormData();
+    Object.keys(values).forEach(key => {
+      formData.append(key, values[key]);
+    });
+
+    const totalEntries = formData.entries().length;
+    console.log('Total entries:', totalEntries);
   };
 
   const handleRegister = async values => {
@@ -62,12 +74,14 @@ export default function Register({navigation}) {
         organization: '',
         state: '',
         city: '',
+        password: '',
       }}
       validationSchema={validationSchema}
       onSubmit={handleRegister}>
       {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
-        <View style={styles.maincontainer}>
-          <ScrollView style={styles.mainSubContainer}>
+        <ScrollView style={styles.maincontainer}>
+          <CustomHeader height={247} width={'100%'} />
+          <View style={styles.mainSubContainer}>
             <Text style={styles.MainText}>Become an Investor</Text>
             <View style={styles.SubContainer}>
               <Text style={styles.InputText}>Name</Text>
@@ -92,6 +106,18 @@ export default function Register({navigation}) {
               />
               {touched.email && errors.email && (
                 <Text style={styles.errorText}>{errors.email}</Text>
+              )}
+
+              <Text style={styles.InputText}>Phone</Text>
+              <TextInput
+                placeholder="Enter your Phone"
+                style={styles.InputBox}
+                onChangeText={handleChange('phone')}
+                onBlur={handleBlur('phone')}
+                value={values.phone}
+              />
+              {touched.phone && errors.phone && (
+                <Text style={styles.errorText}>{errors.phone}</Text>
               )}
 
               <Text style={styles.InputText}>Password</Text>
@@ -163,7 +189,7 @@ export default function Register({navigation}) {
             <TouchableOpacity onPress={handleHaveAccount}>
               <Text style={styles.alreadyText}>Already have an account?</Text>
             </TouchableOpacity>
-          </ScrollView>
+          </View>
           {showAlert && (
             <CustomAlert
               message="Thanks for sharing your interest to become an investor with CAN. We’ll reach out to you within next 24-72 hours to assess whether you meet our criteria to become an investor."
@@ -172,7 +198,7 @@ export default function Register({navigation}) {
               onClose={() => setShowAlert(false)}
             />
           )}
-        </View>
+        </ScrollView>
       )}
     </Formik>
   );

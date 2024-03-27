@@ -25,7 +25,7 @@ const CalendarScreen = () => {
     async function fetchData() {
       try {
         const eventData = await data?.result;
-        console.log(data, '=====hellloooo');
+        console.log(eventData, '=====hellloooo');
         setEvents(eventData);
       } catch (error) {
         console.error('Error fetching calendar data:', error);

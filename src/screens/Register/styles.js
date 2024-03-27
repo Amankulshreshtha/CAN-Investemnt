@@ -3,12 +3,10 @@ import {moderateScale} from '@Utills/Metrics';
 
 export default styles = StyleSheet.create({
   maincontainer: {
-    top: -70,
+    top: '-8%',
     zIndex: 99,
     flex: 1,
-    margin: moderateScale(10),
-    padding: moderateScale(20),
-    backgroundColor: '#fff',
+
     shadowColor: '#000000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.8,
@@ -16,7 +14,6 @@ export default styles = StyleSheet.create({
     marginTop: 0,
     borderRadius: moderateScale(30),
     position: 'relative',
-    // height: '100%',
     marginBottom: -moderateScale(60),
   },
   MainText: {
@@ -46,10 +43,13 @@ export default styles = StyleSheet.create({
     fontSize: moderateScale(16),
   },
   mainSubContainer: {
-    // backgroundColor: 'red',
-
-    // backgroundColor: 'red',
+    margin: moderateScale(10),
+    padding: moderateScale(20),
+    top: '-7%',
+    borderRadius: 20,
     marginTop: -moderateScale(5),
+    backgroundColor: '#fff',
+    flex: 1,
   },
   eyeView: {
     flexDirection: 'row',

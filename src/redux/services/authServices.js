@@ -4,7 +4,7 @@ export const authService = clientApi.injectEndpoints({
   endpoints: builder => ({
     loginUser: builder.mutation({
       query: body => ({
-        url: `/login`,
+        url: `/investor_login`,
         method: 'POST',
         body: body,
       }),
@@ -17,7 +17,7 @@ export const authService = clientApi.injectEndpoints({
     // Register User
     registerUser: builder.mutation({
       query: body => ({
-        url: `/register`,
+        url: `/add_Investor`,
         method: 'POST',
         body: body,
       }),
@@ -54,7 +54,7 @@ export const authService = clientApi.injectEndpoints({
     }),
     ProfileData: builder.mutation({
       query: body => ({
-        url: `/update`,
+        url: `/update_Investor`,
         method: 'PUT',
         body: body,
       }),
@@ -71,9 +71,12 @@ export const authService = clientApi.injectEndpoints({
       query: id => '/get_all_portfolio',
       method: 'GET',
     }),
-    Active_Mandate: builder.query({
-      query: id => '/mandate/list',
-      method: 'GET',
+    Active_Mandate: builder.mutation({
+      query: body => ({
+        url: `/mandate/list`,
+        method: 'POST',
+        body: body,
+      }),
     }),
 
     valuation: builder.query({
@@ -95,6 +98,6 @@ export const {
   useProfileDataMutation,
   useUpdate_passwordMutation,
   usePortfolioDataQuery,
-  useActive_MandateQuery,
+  useActive_MandateMutation,
   useLazyValuationQuery,
 } = authService;

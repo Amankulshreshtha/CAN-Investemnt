@@ -35,6 +35,7 @@ const Profile = () => {
     name,
     email,
     organization,
+    phone,
     state,
     city,
   };

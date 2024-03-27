@@ -17,108 +17,79 @@ import AnsQues from '../screens/Forum/ForumComponent/AnsQues/AnsQues';
 const Stack = createStackNavigator();
 
 const StackNavigation = () => {
+  const isLoggedIn = false;
+
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Slider"
-        screenOptions={{
-          // header: () => <CustomHeader />,
-          headerStyle: {backgroundColor: '#0A4975', height: 200},
-          headerTintColor: '#fff',
-        }}>
-        <Stack.Screen
-          name="Register"
-          component={Register}
-          options={{
-            header: () => <CustomHeader height={verticalScale(246)} />,
-            title: 'Register',
-            headerStyle: {height: 300},
-          }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{
-            header: () => <CustomHeader height={verticalScale(343)} />,
-            title: 'Login',
-            headerStyle: {height: verticalScale(300)},
-          }}
-        />
-        <Stack.Screen
-          name="ForgotPassword"
-          component={ForgotPasswordEmail}
-          options={{
-            header: () => <CustomHeader height={verticalScale(343)} />,
-            // headerShown: false,
-            title: 'Forgot Password',
-            headerStyle: {height: verticalScale(200)},
-          }}
-        />
-        <Stack.Screen
-          name="ForgotPasswordMessage"
-          component={ForgotPasswordMessage}
-          options={{
-            header: () => <CustomHeader height={verticalScale(343)} />,
-            // headerShown: false,
-            title: 'Forgot Password Message',
-            headerStyle: {height: verticalScale(200)},
-          }}
-        />
-        <Stack.Screen
-          name="Home"
-          component={DrawerNavigation}
-          options={{
+      {isLoggedIn ? (
+        <Stack.Navigator
+          initialRouteName="Slider"
+          screenOptions={{
             headerShown: false,
-            title: 'Home',
-            headerStyle: {height: 1},
-          }}
-        />
-        <Stack.Screen
-          name="Valuation"
-          component={Valuation}
-          options={{
+            headerTintColor: '#fff',
+          }}>
+          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen
+            name="ForgotPassword"
+            component={ForgotPasswordEmail}
+            options={{
+              header: () => <CustomHeader height={verticalScale(343)} />,
+              title: 'Forgot Password',
+              headerStyle: {height: verticalScale(200)},
+            }}
+          />
+          <Stack.Screen
+            name="ForgotPasswordMessage"
+            component={ForgotPasswordMessage}
+            options={{
+              header: () => <CustomHeader height={verticalScale(343)} />,
+              title: 'Forgot Password Message',
+              headerStyle: {height: verticalScale(200)},
+            }}
+          />
+          <Stack.Screen name="Home" component={DrawerNavigation} />
+          <Stack.Screen name="Valuation" component={Valuation} />
+          <Stack.Screen name="HaveQuestions" component={HaveQuestions} />
+          <Stack.Screen name="AnsQues" component={AnsQues} />
+          <Stack.Screen name="Formu" component={Forum} />
+          <Stack.Screen name="Slider" component={Slider} />
+        </Stack.Navigator>
+      ) : (
+        <Stack.Navigator
+          initialRouteName="Login"
+          screenOptions={{
             headerShown: false,
-            title: 'Home',
-            headerStyle: {height: 1},
-          }}
-        />
-        <Stack.Screen
-          name="HaveQuestions"
-          component={HaveQuestions}
-          options={{
-            headerShown: false,
-            title: 'Home',
-            headerStyle: {height: 1},
-          }}
-        />
-        <Stack.Screen
-          name="AnsQues"
-          component={AnsQues}
-          options={{
-            headerShown: false,
-            title: 'Home',
-            headerStyle: {height: 1},
-          }}
-        />
-        <Stack.Screen
-          name="Formu"
-          component={Forum}
-          options={{
-            headerShown: false,
-            title: 'Home',
-            headerStyle: {height: 1},
-          }}
-        />
-        <Stack.Screen
-          name="Slider"
-          component={Slider}
-          options={{
-            headerShown: false,
-            title: 'Home',
-            headerStyle: {height: 1},
-          }}
-        />
-      </Stack.Navigator>
+            headerTintColor: '#fff',
+          }}>
+          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen
+            name="ForgotPassword"
+            component={ForgotPasswordEmail}
+            options={{
+              header: () => <CustomHeader height={verticalScale(343)} />,
+              title: 'Forgot Password',
+              headerStyle: {height: verticalScale(200)},
+            }}
+          />
+          <Stack.Screen
+            name="ForgotPasswordMessage"
+            component={ForgotPasswordMessage}
+            options={{
+              header: () => <CustomHeader height={verticalScale(343)} />,
+              title: 'Forgot Password Message',
+              headerStyle: {height: verticalScale(200)},
+            }}
+          />
+          <Stack.Screen name="Home" component={DrawerNavigation} />
+          <Stack.Screen name="Valuation" component={Valuation} />
+          <Stack.Screen name="HaveQuestions" component={HaveQuestions} />
+          <Stack.Screen name="AnsQues" component={AnsQues} />
+          <Stack.Screen name="Formu" component={Forum} />
+          {/* <Stack.Screen name="Slider" component={Slider} /> */}
+        </Stack.Navigator>
+      )}
     </NavigationContainer>
   );
 };

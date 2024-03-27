@@ -25,6 +25,7 @@ export default StyleSheet.create({
     margin: moderateScale(20),
     marginBottom: '-45%',
     padding: moderateScale(20),
+    top: '-10%',
     // position: 'absolute',
     borderRadius: 20,
     shadowColor: '#000000',
